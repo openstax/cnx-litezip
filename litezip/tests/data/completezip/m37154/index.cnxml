@@ -6,12 +6,12 @@
   <!-- WARNING! The 'metadata' section is read only. Do not edit below.
        Changes to the metadata section in the source will not be saved. -->
   <md:repository>http://cnx.org/content</md:repository>
-  <md:content-url>http://cnx.org/content/m37154/latest</md:content-url>
+  <md:content-url>http://cnx.org/content/m37154/latest/</md:content-url>
   <md:content-id>m37154</md:content-id>
   <md:title>A Student to Student Intro to IDE Programming and CCS4</md:title>
   <md:version>1.2</md:version>
-  <md:created>2010/08/09 14:25:38 -0500</md:created>
-  <md:revised>2011/03/08 18:15:08 -0600</md:revised>
+  <md:created>2010/08/09 14:25:38 GMT-5</md:created>
+  <md:revised>2011/03/08 18:15:12.687 US/Central</md:revised>
   <md:actors>
     <md:person userid="mwjhnsn">
       <md:firstname>Matthew</md:firstname>
