@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
-import sys
 from setuptools import setup, find_packages
 
-
-IS_PY3 = sys.version_info > (3,)
 
 setup_requires = (
     'pytest-runner',
@@ -19,10 +16,6 @@ extras_require = {
 description = "Connexions LiteZip Library"
 with open('README.rst', 'r') as readme:
     long_description = readme.read()
-
-if not IS_PY3:
-    pass
-    # tests_require.append('mock==1.0.1')
 
 setup(
     name='cnx-litezip',
@@ -41,7 +34,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     package_data={
-        'cnxml.tests': ['data/**/*.*'],
+        'litezip.tests': ['data/**/*.*'],
         },
     entry_points="""\
     """,
