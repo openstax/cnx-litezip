@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from pathlib import Path
 
+import pytest
+
 
 def test_parse_module(datadir):
     module_id = 'm40645'
@@ -27,3 +29,15 @@ def test_Module_struct(datadir):
     assert data_struct.id == module_id
     assert data_struct.file == content
     assert data_struct.resources == (data_path / 'Lab4 Fill Order.png',)
+
+
+def test_parse_module_without_resources(datadir):
+    module_id = 'm42304'
+    data_path = datadir / 'litezip' / module_id
+
+    from litezip.main import parse_module
+    data_struct = parse_module(data_path)
+
+    assert data_struct[0] == module_id
+    assert data_struct[1] == data_path / 'index.cnxml'
+    assert data_struct[2] == tuple()
