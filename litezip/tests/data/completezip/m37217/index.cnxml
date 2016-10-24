@@ -7,12 +7,12 @@
   <!-- WARNING! The 'metadata' section is read only. Do not edit below.
        Changes to the metadata section in the source will not be saved. -->
   <md:repository>http://cnx.org/content</md:repository>
-  <md:content-url>http://cnx.org/content/m37217/latest</md:content-url>
+  <md:content-url>http://cnx.org/content/m37217/latest/</md:content-url>
   <md:content-id>m37217</md:content-id>
   <md:title>Interrupt Driven Programming in MSP430 Assembly</md:title>
   <md:version>1.2</md:version>
-  <md:created>2010/12/15 10:58:00 -0600</md:created>
-  <md:revised>2011/08/16 13:55:25 -0500</md:revised>
+  <md:created>2010/12/15 10:58:00 US/Central</md:created>
+  <md:revised>2011/08/16 13:55:25.412 GMT-5</md:revised>
   <md:actors>
     <md:person userid="mwjhnsn">
       <md:firstname>Matthew</md:firstname>

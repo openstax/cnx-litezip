@@ -7,12 +7,12 @@
   <!-- WARNING! The 'metadata' section is read only. Do not edit below.
        Changes to the metadata section in the source will not be saved. -->
   <md:repository>http://cnx.org/content</md:repository>
-  <md:content-url>http://cnx.org/content/m40646/latest</md:content-url>
+  <md:content-url>http://cnx.org/content/m40646/latest/</md:content-url>
   <md:content-id>m40646</md:content-id>
   <md:title>Using C and the ADC for "Real World" Applications with the MSP430</md:title>
   <md:version>1.1</md:version>
-  <md:created>2011/06/07 16:32:13 -0500</md:created>
-  <md:revised>2011/08/16 14:08:21 -0500</md:revised>
+  <md:created>2011/06/07 16:32:13.295 GMT-5</md:created>
+  <md:revised>2011/08/16 14:08:21.018 GMT-5</md:revised>
   <md:actors>
     <md:person userid="mwjhnsn">
       <md:firstname>Matthew</md:firstname>
@@ -35,8 +35,8 @@
   -->
   <md:keywordlist>
     <md:keyword>ADC</md:keyword>
-    <md:keyword>Cavallaro</md:keyword>
     <md:keyword>C programming</md:keyword>
+    <md:keyword>Cavallaro</md:keyword>
     <md:keyword>Elec 220</md:keyword>
     <md:keyword>microcontroller</md:keyword>
     <md:keyword>MSP430</md:keyword>

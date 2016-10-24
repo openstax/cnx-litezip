@@ -6,12 +6,12 @@
   <!-- WARNING! The 'metadata' section is read only. Do not edit below.
        Changes to the metadata section in the source will not be saved. -->
   <md:repository>http://cnx.org/content</md:repository>
-  <md:content-url>http://cnx.org/content/m42303/latest</md:content-url>
+  <md:content-url>http://cnx.org/content/m42303/latest/</md:content-url>
   <md:content-id>m42303</md:content-id>
   <md:title>Introduction to Quartus and Circuit Diagram Design</md:title>
   <md:version>1.1</md:version>
-  <md:created>2011/07/18 11:30:35 -0500</md:created>
-  <md:revised>2012/01/19 21:50:11 -0600</md:revised>
+  <md:created>2011/07/18 11:30:35.584 GMT-5</md:created>
+  <md:revised>2012/01/19 21:50:11.940 US/Central</md:revised>
   <md:actors>
     <md:person userid="cavallar">
       <md:firstname>Joseph</md:firstname>
