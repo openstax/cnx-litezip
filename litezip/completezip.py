@@ -5,6 +5,7 @@ from .main import parse_litezip
 
 
 __all__ = (
+    'convert_completezip',
 )
 
 

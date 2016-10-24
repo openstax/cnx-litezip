@@ -3,19 +3,7 @@ import hashlib
 import shutil
 from pathlib import Path
 
-
-def _convert_to_relative_paths(struct, base):
-    """Makes the given litezip `struct`'s `Path` objects relative to `base`.
-
-    """
-    def _rel(p): return p.relative_to(base)
-
-    new_struct = []
-    for obj in struct:
-        new_obj = type(obj)(obj.id, _rel(obj.file),
-                            tuple([_rel(y) for y in obj.resources]))
-        new_struct.append(new_obj)
-    return tuple(new_struct)
+from .utils import convert_to_relative_paths
 
 
 def test_convert_completezip(datadir, tmpdir):
@@ -31,9 +19,9 @@ def test_convert_completezip(datadir, tmpdir):
     expected = parse_litezip(datadir / 'litezip')
     assert _keyed(data_struct) == _keyed(expected)
 
-    relative_expected = _convert_to_relative_paths(expected,
-                                                   datadir / 'litezip')
-    relative_data_struct = _convert_to_relative_paths(data_struct, data_path)
+    relative_expected = convert_to_relative_paths(expected,
+                                                  datadir / 'litezip')
+    relative_data_struct = convert_to_relative_paths(data_struct, data_path)
     assert relative_data_struct == relative_expected
 
     def _hash_it(x):
