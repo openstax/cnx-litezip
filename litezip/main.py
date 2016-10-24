@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from collections import namedtuple
 
+from .exceptions import MissingFile
+
 
 __all__ = (
     'parse_module',
@@ -20,5 +22,8 @@ def parse_module(path):
     id = path.name
     file = path / 'index.cnxml'
     resources = tuple(r for r in path.glob('*') if r.name != 'index.cnxml')
+
+    if not file.exists():
+        raise MissingFile(file)
 
     return Module(id, file, resources)
