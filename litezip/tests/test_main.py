@@ -94,3 +94,22 @@ def test_parse_collection_raises_missing_file(tmpdir):
         parse_collection(data_path)
 
     assert missing_file == exc_info.value.args[0]
+
+
+def test_parse_litezip(datadir):
+    data_path = datadir / 'litezip'
+
+    from litezip.main import parse_litezip
+    data_struct = parse_litezip(data_path)
+
+    assert len(data_struct) == 8
+    from litezip.main import Collection, Module
+    col = Collection('col11405', data_path / 'collection.xml', tuple())
+    assert data_struct[0] == col
+    mods = [
+        Module('m37154', data_path / 'm37154' / 'index.cnxml', tuple()),
+        Module('m40646', data_path / 'm40646' / 'index.cnxml',
+               tuple([data_path / 'm40646' / 'Photodiode.png'])),
+    ]
+    for mod in mods:
+        assert mod in data_struct
