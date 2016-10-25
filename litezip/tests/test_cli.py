@@ -49,3 +49,17 @@ def test_completezip2litezip_output(data_path, datadir, tmpdir):
 
     assert retcode == 0
     assert_equal(output_path, datadir / 'litezip')
+
+
+def test_completezip2litezip_preexisting_output(data_path, datadir, tmpdir,
+                                                capsys):
+    output_path = Path(str(tmpdir.mkdir('col00000')))
+
+    from litezip.cli import completezip2litezip
+    args = ['--output', str(output_path), str(data_path)]
+    retcode = completezip2litezip(args)
+
+    assert retcode == 1
+
+    out, err = capsys.readouterr()
+    assert "output-dir cannot exist prior to conversion" in err
