@@ -38,3 +38,14 @@ def test_completezip2litezip(data_path, datadir):
 
     assert retcode == 0
     assert_equal(data_path, datadir / 'litezip')
+
+
+def test_completezip2litezip_output(data_path, datadir, tmpdir):
+    output_path = Path(str(tmpdir)) / 'col00000'
+
+    from litezip.cli import completezip2litezip
+    args = ['--output', str(output_path), str(data_path)]
+    retcode = completezip2litezip(args)
+
+    assert retcode == 0
+    assert_equal(output_path, datadir / 'litezip')
