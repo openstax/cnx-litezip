@@ -39,5 +39,7 @@ setup(
         'litezip.tests': ['data/**/*.*'],
         },
     entry_points="""\
+    [console_scripts]
+    completezip2litezip = litezip.cli:completezip2litezip
     """,
     )
