@@ -6,6 +6,7 @@ setup_requires = (
     'pytest-runner',
     )
 install_requires = (
+    'cnxml',
     'lxml',
     'pathlib;python_version<="2.7"',
     )
