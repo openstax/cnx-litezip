@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 import argparse
 import shutil
+import sys
 from pathlib import Path
 
 from litezip import convert_completezip
@@ -27,6 +29,10 @@ def completezip2litezip(argv=None):
     output_dir = args.output_dir
     if output_dir:
         output_path = Path(output_dir)
+        if output_path.exists():
+            print("ERROR: output-dir cannot exist prior to conversion",
+                  file=sys.stderr)
+            return 1
         shutil.copytree(str(completezip_path), str(output_path))
         completezip_path = output_path
 
