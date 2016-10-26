@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from pathlib import Path
+
 import pytest
 
 
@@ -27,3 +29,23 @@ def test_validate_module(datadir):
     errors = validate_content(data_struct)
 
     assert not errors
+
+
+def test_validate_litezip(datadir):
+    from litezip.main import parse_litezip
+    data_path = datadir / 'invalid_litezip'
+    data_struct = parse_litezip(data_path)
+
+    from litezip.validate import validate_litezip
+    validation_msgs = validate_litezip(data_struct)
+
+    expected = [
+        (Path(data_path / 'collection.xml'),
+         '114:13 -- error: element "para" from namespace '
+         '"http://cnx.rice.edu/cnxml" not allowed in this context'),
+        (Path(data_path / 'mux'), 'mux is not a valid identifier'),
+        (Path(data_path / 'mux/index.cnxml'),
+         '61:10 -- error: unknown element "foo" from namespace '
+         '"http://cnx.rice.edu/cnxml"'),
+    ]
+    assert validation_msgs == expected
