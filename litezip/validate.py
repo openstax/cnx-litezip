@@ -7,6 +7,7 @@ import cnxml
 __all__ = (
     'is_valid_identifier',
     'validate_content',
+    'validate_litezip',
 )
 
 
@@ -26,3 +27,23 @@ def validate_content(obj):
         Module: cnxml.validate_cnxml,
     }[type(obj)]
     return validator(obj.file)
+
+
+def validate_litezip(struct):
+    """Validate the given litezip as `struct`.
+    Returns a list of validation messages.
+
+    """
+    msgs = []
+
+    def _fmt_err(err): return "{}:{} -- {}: {}".format(*err)
+
+    for obj in struct:
+        if not is_valid_identifier(obj.id):
+            msg = (obj.file.parent,
+                   "{} is not a valid identifier".format(obj.id),)
+            msgs.append(msg)
+        content_msgs = list([(obj.file, _fmt_err(err),)
+                             for err in validate_content(obj)])
+        msgs.extend(content_msgs)
+    return msgs
