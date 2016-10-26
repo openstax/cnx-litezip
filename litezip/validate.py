@@ -3,6 +3,8 @@ import re
 
 import cnxml
 
+from .logger import logger
+
 
 __all__ = (
     'is_valid_identifier',
@@ -42,8 +44,11 @@ def validate_litezip(struct):
         if not is_valid_identifier(obj.id):
             msg = (obj.file.parent,
                    "{} is not a valid identifier".format(obj.id),)
+            logger.info("{}: {}".format(*msg))
             msgs.append(msg)
         content_msgs = list([(obj.file, _fmt_err(err),)
                              for err in validate_content(obj)])
+        for msg in content_msgs:
+            logger.info("{}: {}".format(*msg))
         msgs.extend(content_msgs)
     return msgs
