@@ -62,4 +62,4 @@ def test_completezip2litezip_preexisting_output(data_path, datadir, tmpdir,
     assert retcode == 1
 
     out, err = capsys.readouterr()
-    assert "output-dir cannot exist prior to conversion" in err
+    assert "ERROR: output-dir cannot exist prior to conversion" in out
