@@ -63,3 +63,23 @@ def test_completezip2litezip_preexisting_output(data_path, datadir, tmpdir,
 
     out, err = capsys.readouterr()
     assert "ERROR: output-dir cannot exist prior to conversion" in out
+
+
+def test_completezip2litezip_with_verbosity(data_path, datadir, capsys):
+    from litezip.cli import completezip2litezip
+    retcode = completezip2litezip(['-v', str(data_path)])
+
+    assert retcode == 0
+
+    out, err = capsys.readouterr()
+    assert "DEBUG: removed " in out
+
+
+def test_completezip2litezip_quiet_mode(data_path, datadir, capsys):
+    from litezip.cli import completezip2litezip
+    retcode = completezip2litezip(['-q', str(data_path)])
+
+    assert retcode == 0
+
+    out, err = capsys.readouterr()
+    assert not out

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from pathlib import Path
 
+from .logger import logger
 from .main import parse_litezip
 
 
@@ -16,4 +17,5 @@ def convert_completezip(path):
     """
     for filepath in path.glob('**/index_auto_generated.cnxml'):
         filepath.rename(filepath.parent / 'index.cnxml')
+        logger.debug('removed {}'.format(filepath))
     return parse_litezip(path)
