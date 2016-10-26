@@ -72,7 +72,7 @@ def set_verbosity(verbose):
     configure_logging(config)
 
 
-def completezip2litezip(argv=None):
+def main(argv=None):
     parser = _arg_parser()
     args = parser.parse_args(argv)
 

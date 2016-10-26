@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from .utils import convert_to_relative_paths
+from ..utils import convert_to_relative_paths
 
 
 @pytest.fixture
@@ -33,8 +33,8 @@ def assert_equal(data_path, expected_path):
 
 
 def test_completezip2litezip(data_path, datadir):
-    from litezip.cli import completezip2litezip
-    retcode = completezip2litezip([str(data_path)])
+    from litezip.cli.completezip2litezip import main
+    retcode = main([str(data_path)])
 
     assert retcode == 0
     assert_equal(data_path, datadir / 'litezip')
@@ -43,9 +43,9 @@ def test_completezip2litezip(data_path, datadir):
 def test_completezip2litezip_output(data_path, datadir, tmpdir):
     output_path = Path(str(tmpdir)) / 'col00000'
 
-    from litezip.cli import completezip2litezip
+    from litezip.cli.completezip2litezip import main
     args = ['--output', str(output_path), str(data_path)]
-    retcode = completezip2litezip(args)
+    retcode = main(args)
 
     assert retcode == 0
     assert_equal(output_path, datadir / 'litezip')
@@ -55,9 +55,9 @@ def test_completezip2litezip_preexisting_output(data_path, datadir, tmpdir,
                                                 capsys):
     output_path = Path(str(tmpdir.mkdir('col00000')))
 
-    from litezip.cli import completezip2litezip
+    from litezip.cli.completezip2litezip import main
     args = ['--output', str(output_path), str(data_path)]
-    retcode = completezip2litezip(args)
+    retcode = main(args)
 
     assert retcode == 1
 
@@ -66,8 +66,8 @@ def test_completezip2litezip_preexisting_output(data_path, datadir, tmpdir,
 
 
 def test_completezip2litezip_with_verbosity(data_path, datadir, capsys):
-    from litezip.cli import completezip2litezip
-    retcode = completezip2litezip(['-v', str(data_path)])
+    from litezip.cli.completezip2litezip import main
+    retcode = main(['-v', str(data_path)])
 
     assert retcode == 0
 
@@ -76,8 +76,8 @@ def test_completezip2litezip_with_verbosity(data_path, datadir, capsys):
 
 
 def test_completezip2litezip_quiet_mode(data_path, datadir, capsys):
-    from litezip.cli import completezip2litezip
-    retcode = completezip2litezip(['-q', str(data_path)])
+    from litezip.cli.completezip2litezip import main
+    retcode = main(['-q', str(data_path)])
 
     assert retcode == 0
 
