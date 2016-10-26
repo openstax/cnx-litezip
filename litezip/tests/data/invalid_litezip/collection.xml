@@ -111,6 +111,8 @@
        Changes to the metadata section in the source will not be saved. -->
 </metadata>
 
+  <cnx:para>smoo</cnx:para>
+
   <col:parameters>
     <col:param name="real-imaginary-notation" value="font"/>
     <col:param name="and-or-notation"

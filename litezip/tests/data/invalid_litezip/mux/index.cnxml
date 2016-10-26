@@ -58,6 +58,7 @@
 </metadata>
 
 <content>
+    <foo>bar</foo>
     <section id="id1170251895307">
       <title>Lab 1-1</title>
       <section id="id1170250705730">
