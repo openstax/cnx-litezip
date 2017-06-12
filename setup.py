@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import versioneer
 from setuptools import setup, find_packages
 
 
@@ -20,9 +21,10 @@ description = "Connexions LiteZip Library"
 with open('README.rst', 'r') as readme:
     long_description = readme.read()
 
+
 setup(
     name='cnx-litezip',
-    version='1.1.0',
+    version=versioneer.get_version(),
     author='Connexions team',
     author_email='info@cnx.org',
     url="https://github.com/connexions/cnx-litezip",
@@ -39,6 +41,7 @@ setup(
     package_data={
         'litezip.tests': ['data/**/*.*'],
         },
+    cmdclass=versioneer.get_cmdclass(),
     entry_points="""\
     [console_scripts]
     completezip2litezip = litezip.cli.completezip2litezip:main
