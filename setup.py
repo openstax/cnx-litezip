@@ -36,12 +36,8 @@ setup(
     install_requires=install_requires,
     tests_require=tests_require,
     extras_require=extras_require,
-    test_suite='litezip.tests',
     packages=find_packages(),
     include_package_data=True,
-    package_data={
-        'litezip.tests': ['data/**/*.*'],
-        },
     cmdclass=versioneer.get_cmdclass(),
     entry_points="""\
     [console_scripts]
