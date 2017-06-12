@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
+import pathlib
+
 import versioneer
 from setuptools import setup, find_packages
 
 
-setup_requires = (
-    'pytest-runner',
-    )
-install_requires = (
-    'cnxml',
-    'lxml',
-    'pathlib;python_version<="2.7"',
-    )
-tests_require = [
-    'pytest',
-    ]
+here = pathlib.Path('.')
+
+
+def read_from_requirements_txt(filepath):
+    f = here / filepath
+    with f.open() as fb:
+        return tuple([x.strip() for x in fb if not x.strip().startswith('#')])
+
+
+install_requires = read_from_requirements_txt('requirements/main.txt')
+tests_require = read_from_requirements_txt('requirements/test.txt')
 extras_require = {
     'test': tests_require,
     }
@@ -31,7 +33,6 @@ setup(
     license='LGPL, See also LICENSE.txt',
     description=description,
     long_description=long_description,
-    setup_requires=setup_requires,
     install_requires=install_requires,
     tests_require=tests_require,
     extras_require=extras_require,
