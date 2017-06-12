@@ -45,7 +45,6 @@ def _parse_collection_id(elm_tree):
 
     """
     xpath = '//md:content-id/text()'
-    nsmap = []
     return [x for x in elm_tree.xpath(xpath, namespaces=COLLECTION_NSMAP)][0]
 
 

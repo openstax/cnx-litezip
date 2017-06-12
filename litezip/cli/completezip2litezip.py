@@ -2,7 +2,6 @@
 from __future__ import print_function
 import argparse
 import shutil
-import sys
 from pathlib import Path
 
 from litezip import convert_completezip
@@ -48,6 +47,6 @@ def main(argv=None):
         shutil.copytree(str(completezip_path), str(output_path))
         completezip_path = output_path
 
-    struct = convert_completezip(completezip_path)
+    convert_completezip(completezip_path)
 
     return 0

@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from pathlib import Path
 
-import pytest
-
 
 def test_is_valid_identifier():
     from litezip.validate import is_valid_identifier as target

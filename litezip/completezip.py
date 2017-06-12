@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from pathlib import Path
-
 from .logger import logger
 from .main import parse_litezip
 
