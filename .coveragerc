@@ -2,7 +2,7 @@
 source = litezip
 omit =
     tests/*
-
+    litezip/contrib/pytest
 
 [report]
 exclude_lines =
@@ -12,3 +12,4 @@ exclude_lines =
 omit =
     tests/*
     litezip/_version.py
+    litezip/contrib/pytest/*

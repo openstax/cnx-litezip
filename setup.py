@@ -43,5 +43,7 @@ setup(
     [console_scripts]
     completezip2litezip = litezip.cli.completezip2litezip:main
     validate-litezip = litezip.cli.validate:main
+    [pytest11]
+    cnx-litezip = litezip.contrib.pytest
     """,
     )
