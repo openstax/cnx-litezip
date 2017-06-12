@@ -21,7 +21,7 @@ def _arg_parser():
         help="print nothing to stdout or stderr")
     parser.add_argument(
         'location',
-        help="Location of the unpacked completezip")
+        help="Location of the unpacked litezip")
     return parser
 
 
