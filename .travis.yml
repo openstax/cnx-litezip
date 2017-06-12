@@ -2,24 +2,13 @@ language: python
 python:
   - "3.6"
 before_install:
-  - pip install pep8
-  - pep8 --exclude=tests *.py litezip
-  - pep8 --max-line-length=200 litezip/tests
-
-  - pip install --upgrade setuptools
-  - pip install --upgrade pip
+  # Create the virtual env and lint the codebase
+  - make lint VENV_EXTRA_ARGS="--system-site-packages"
   # Install the codecov reporting utility
   - pip install codecov
-install:
-  # Install test requirements
-  - pip install -e ".[test]"
-  # Now install it as a standalone distribution
-  - pip uninstall -y .
-  - pip install .
 script:
-  - py.test
+  - make test
 after_success:
-  - coverage report
   # Report test coverage to codecov.io
   - codecov
 notifications:
