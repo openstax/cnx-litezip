@@ -5,6 +5,11 @@
 
    - feature message
 
+1.2.1
+-----
+
+- Fix to include the pytest fixture data in the distribution.
+
 1.2.0
 -----
 

@@ -2,4 +2,4 @@ include *.rst *.txt *.ini *.yaml
 include versioneer.py
 include litezip/_version.py
 recursive-include requirements
-recursive-include tests/data/** *
+recursive-include litezip/contrib/pytest/data/** *
