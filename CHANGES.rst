@@ -5,6 +5,11 @@
 
    - feature message
 
+1.2.0
+-----
+
+- Share this package's pytest fixtures.
+
 1.1.0
 -----
 
