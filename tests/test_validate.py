@@ -6,6 +6,9 @@ def test_is_valid_identifier():
     from litezip.validate import is_valid_identifier as target
     assert target('m40646')
     assert target('col11405')
+    assert target('NEW')  # special case for new collection content
+    assert target('mNEW')  # special case for new module content
+    assert target('mNEW99')  # special case for new module content
     assert not target('mi5')
 
 
