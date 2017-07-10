@@ -54,8 +54,8 @@ def _find_resources(directory, excludes=[]):
     which are callables that take a file parameter (as a `Path` instance).
 
     """
-    return [r for r in directory.glob('*')
-            if True not in [e(r) for e in excludes]]
+    return sorted([r for r in directory.glob('*')
+                   if True not in [e(r) for e in excludes]])
 
 
 def parse_module(path):
@@ -104,4 +104,4 @@ def parse_litezip(path):
     struct = [parse_collection(path)]
     struct.extend([parse_module(x) for x in path.iterdir()
                    if x.is_dir() and x.name.startswith('m')])
-    return tuple(struct)
+    return tuple(sorted(struct))
