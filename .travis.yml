@@ -1,6 +1,8 @@
+sudo: required
+services:
+  - docker
 language: python
-python:
-  - "3.6"
+
 before_install:
   # Create the virtual env and lint the codebase
   - make lint VENV_EXTRA_ARGS="--system-site-packages"

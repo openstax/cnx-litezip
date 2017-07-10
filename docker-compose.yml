@@ -1,0 +1,11 @@
+version: '2'
+services:
+  project:
+    build: .
+    volumes:
+      - ./litezip:/src/litezip:z
+      - ./tests:/src/tests:z
+      - ./htmlcov:/src/htmlcov:z
+  testing:
+    extends:
+      service: project
