@@ -5,6 +5,11 @@
 
    - feature message
 
+1.3.0
+-----
+
+- Add identifier patterns for designating content as "new".
+
 1.2.2
 -----
 
