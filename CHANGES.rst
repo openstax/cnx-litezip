@@ -5,6 +5,12 @@
 
    - feature message
 
+1.2.2
+-----
+
+- Use docker for code testing.
+- Modify parsing functions to be idempotent.
+
 1.2.1
 -----
 
