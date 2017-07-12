@@ -107,17 +107,21 @@ def parse_litezip(path):
     return tuple(sorted(struct))
 
 
-def extract_metadata(module):
+def extract_metadata(model):
     """Parse the metadata from a ``module`` (a ``litezip.Module`` object).
     Returns a dictionary of metadata.
 
     """
-    xml = etree.parse(str(module.file))
+    xml = etree.parse(str(model.file))
 
     def lookup(xpath, root=xml):
         return root.xpath(xpath, namespaces=COLLECTION_NSMAP)
 
-    meta_elm = lookup('//c:metadata')[0]
+    if isinstance(model, Module):
+        meta_elm = lookup('//c:metadata')[0]
+    else:
+        # Must be a collection then...
+        meta_elm = lookup('//col:metadata')[0]
     roles_elm = lookup('md:roles', meta_elm)[0]
     metadata = {
         'repository': lookup('md:repository/text()', meta_elm)[0],

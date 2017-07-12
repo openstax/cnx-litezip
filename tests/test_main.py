@@ -110,7 +110,7 @@ def test_parse_litezip(datadir):
         assert mod in data_struct
 
 
-def test_extract_metadata(litezip_valid_litezip):
+def test_extract_metadata_for_module(litezip_valid_litezip):
     module_filepath = litezip_valid_litezip / 'm42304'
 
     expected_metadata = {
@@ -149,5 +149,66 @@ def test_extract_metadata(litezip_valid_litezip):
 
     module = parse_module(module_filepath)
     metadata = extract_metadata(module)
+
+    assert metadata == expected_metadata
+
+
+def test_extract_metadata_for_collection(litezip_valid_litezip):
+    expected_metadata = {
+        'repository': 'http://cnx.org/content',
+        'url': 'http://cnx.org/content/col11405/1.2',
+        'id': 'col11405',
+        'title': 'Intro to Computational Engineering: Elec 220 Labs',
+        'version': '1.2',
+        'created': '2011/05/24 10:31:56.888 GMT-5',
+        'revised': '2013/03/11 22:52:33.244 GMT-5',
+        'license_url': 'http://creativecommons.org/licenses/by/3.0/',
+        'keywords': [
+            'Calculator',
+            'Cavallaro',
+            'Elec 220',
+            'Gate',
+            'Interrupt',
+            'LC-3',
+            'Loop',
+            'Microcontroller',
+            'MSP 430',
+            'Rice',
+        ],
+        'subjects': ['Science and Technology'],
+        'abstract': ('This collection houses all the documentation for the '
+                     'lab component of Rice Universities Elec 220 lab '
+                     'component.  The labs cover topics such as gates, '
+                     'simulation, basic digital I/O, interrupt driven '
+                     'embedded programming, C language programming, and '
+                     'finally a/d interfacing and touch sensors.'),
+        'language': 'en',
+    }
+    expected_metadata['people'] = {
+        'cavallar': {
+            'firstname': 'Joseph',
+            'surname': 'Cavallaro',
+            'fullname': 'Joseph Cavallaro',
+            'email': 'cavallar@rice.edu',
+        },
+        'jedifan42': {
+            'firstname': 'Chris',
+            'surname': 'Stevenson',
+            'fullname': 'Chris Stevenson',
+            'email': 'cms11@rice.edu',
+        },
+        'mwjhnsn': {
+            'firstname': 'Matthew',
+            'surname': 'Johnson',
+            'fullname': 'Matthew Johnson',
+            'email': 'mwj1@rice.edu',
+        },
+    }
+    expected_metadata['authors'] = ['mwjhnsn', 'jedifan42']
+    expected_metadata['maintainers'] = ['mwjhnsn', 'jedifan42', 'cavallar']
+    expected_metadata['licensors'] = ['mwjhnsn', 'jedifan42', 'cavallar']
+
+    collection= parse_collection(litezip_valid_litezip)
+    metadata = extract_metadata(collection)
 
     assert metadata == expected_metadata
