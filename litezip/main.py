@@ -1,4 +1,5 @@
 from collections import namedtuple
+from functools import partial
 
 from lxml import etree
 
@@ -154,3 +155,36 @@ def extract_metadata(model):
     }
 
     return metadata
+
+
+def update_metadata(model, **kwargs):
+    """Update the given keyword argument metadata in the ``model``."""
+    xml = etree.parse(str(model.file))
+
+    def lookup(xpath, root=xml):
+        return root.xpath(xpath, namespaces=COLLECTION_NSMAP)
+
+    def assign_text(value, xpath):
+        lookup(xpath, meta_elm)[0].text = value
+
+    if isinstance(model, Module):
+        meta_elm = lookup('//c:metadata')[0]
+    else:
+        # Must be a collection then...
+        meta_elm = lookup('//col:metadata')[0]
+
+    mutable_attributes_mapping = {
+        'id': partial(assign_text, xpath='md:content-id'),
+        'version': partial(assign_text, xpath='md:version'),
+        'created': partial(assign_text, xpath='md:created'),
+        'revised': partial(assign_text, xpath='md:revised'),
+        'url': partial(assign_text, xpath='md:content-url'),
+    }
+
+    for key, value in kwargs.items():
+        if key not in mutable_attributes_mapping.keys():
+            raise NotImplementedError('{} is not mutable'.format(key))
+        mutable_attributes_mapping[key](value)
+
+    with model.file.open('wb') as fb:
+        fb.write(etree.tostring(xml))

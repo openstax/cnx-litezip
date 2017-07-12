@@ -1,10 +1,16 @@
+import shutil
 from pathlib import Path
 
 import pytest
 
 from litezip.main import (
-    extract_metadata, parse_collection, parse_litezip, parse_module,
-    Module, Collection,
+    extract_metadata,
+    parse_collection,
+    parse_litezip,
+    parse_module,
+    update_metadata,
+    Collection,
+    Module,
 )
 from litezip.exceptions import MissingFile
 
@@ -212,3 +218,52 @@ def test_extract_metadata_for_collection(litezip_valid_litezip):
     metadata = extract_metadata(collection)
 
     assert metadata == expected_metadata
+
+
+def test_update_metadata_on_module(tmpdir, litezip_valid_litezip):
+    origin_path = litezip_valid_litezip / 'm42304'
+    test_dir = Path(tmpdir.mkdir('update-metadata-on-module'))
+    test_path = test_dir / origin_path.name
+    shutil.copytree(str(origin_path), str(test_path))
+
+    module = parse_module(test_path)
+    id = 'm55555'
+    version = '5.5'
+    update_metadata(module, id=id, version=version)
+
+    with module.file.open('r') as fb:
+        contents = fb.read()
+
+    assert '<md:content-id>{}</md:content-id>'.format(id) in contents
+    assert '<md:version>{}</md:version>'.format(version) in contents
+
+
+def test_update_metadata_on_non_mutable_key(tmpdir, litezip_valid_litezip):
+    origin_path = litezip_valid_litezip / 'm42304'
+    test_dir = Path(tmpdir.mkdir('update-metadata-on-module'))
+    test_path = test_dir / origin_path.name
+    shutil.copytree(str(origin_path), str(test_path))
+
+    module = parse_module(test_path)
+    id = 'm55555'
+    version = '5.5'
+    with pytest.raises(NotImplementedError) as exc_info:
+        update_metadata(module, language='ru')
+
+
+def test_update_metadata_on_collection(tmpdir, litezip_valid_litezip):
+    origin_path = litezip_valid_litezip
+    test_dir = Path(tmpdir.mkdir('update-metadata-on-collection'))
+    test_path = test_dir / origin_path.name
+    shutil.copytree(str(origin_path), str(test_path))
+
+    collection = parse_collection(test_path)
+    id = 'col59595'
+    version = '9.5'
+    update_metadata(collection, id=id, version=version)
+
+    with collection.file.open('r') as fb:
+        contents = fb.read()
+
+    assert '<md:content-id>{}</md:content-id>'.format(id) in contents
+    assert '<md:version>{}</md:version>'.format(version) in contents
