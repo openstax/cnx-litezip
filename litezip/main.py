@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from collections import namedtuple
 
 from lxml import etree
@@ -7,6 +6,7 @@ from .exceptions import MissingFile
 
 
 __all__ = (
+    'extract_metadata',
     'parse_collection',
     'parse_litezip',
     'parse_module',
@@ -105,3 +105,48 @@ def parse_litezip(path):
     struct.extend([parse_module(x) for x in path.iterdir()
                    if x.is_dir() and x.name.startswith('m')])
     return tuple(sorted(struct))
+
+
+def extract_metadata(module):
+    """Parse the metadata from a ``module`` (a ``litezip.Module`` object).
+    Returns a dictionary of metadata.
+
+    """
+    xml = etree.parse(str(module.file))
+
+    def lookup(xpath, root=xml):
+        return root.xpath(xpath, namespaces=COLLECTION_NSMAP)
+
+    meta_elm = lookup('//c:metadata')[0]
+    roles_elm = lookup('md:roles', meta_elm)[0]
+    metadata = {
+        'repository': lookup('md:repository/text()', meta_elm)[0],
+        'url': lookup('md:content-url/text()', meta_elm)[0],
+        'id': lookup('md:content-id/text()', meta_elm)[0],
+        'title': lookup('md:title/text()', meta_elm)[0],
+        'version': lookup('md:version/text()', meta_elm)[0],
+        'created': lookup('md:created/text()', meta_elm)[0],
+        'revised': lookup('md:revised/text()', meta_elm)[0],
+        'license_url': lookup('md:license/@url', meta_elm)[0],
+        'keywords': lookup('md:keywordlist/md:keyword/text()', meta_elm),
+        'subjects': lookup('md:subjectlist/md:subject/text()', meta_elm),
+        'abstract': lookup('md:abstract/text()', meta_elm)[0],
+        'language': lookup('md:language/text()', meta_elm)[0],
+        'authors': lookup('md:role[@type="author"]/text()',
+                          roles_elm)[0].split(),
+        'maintainers': lookup('md:role[@type="maintainer"]/text()',
+                              roles_elm)[0].split(),
+        'licensors': lookup('md:role[@type="licensor"]/text()',
+                            roles_elm)[0].split(),
+        'people': {
+            elm.get('userid'): {
+                'firstname': lookup('md:firstname/text()', elm)[0],
+                'surname': lookup('md:surname/text()', elm)[0],
+                'fullname': lookup('md:fullname/text()', elm)[0],
+                'email': lookup('md:email/text()', elm)[0],
+            }
+            for elm in lookup('md:actors/md:person', meta_elm)
+        },
+    }
+
+    return metadata
