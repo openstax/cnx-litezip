@@ -7,6 +7,7 @@ from .logger import logger
 
 
 __all__ = (
+    'is_new_identifier',
     'is_valid_identifier',
     'validate_content',
     'validate_litezip',
@@ -14,11 +15,16 @@ __all__ = (
 
 
 VALID_ID_REGEX = re.compile("^(col\d{5,}\d*|m\d{4,}|m?NEW\d{,2})$")
+NEW_ID_REGEX = re.compile("^(m?NEW\d{,2})$")
 
 
 def is_valid_identifier(id):
     """Validate that the given `id`."""
     return VALID_ID_REGEX.match(id) is not None
+
+
+def is_new_identifier(id):
+    return NEW_ID_REGEX.match(id) is not None
 
 
 def validate_content(obj):
