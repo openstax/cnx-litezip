@@ -25,6 +25,7 @@ Module = namedtuple('Module', 'id, file, resources')
 COLLECTION_NSMAP = {
     "bib": "http://bibtexml.sf.net/",
     "c": "http://cnx.rice.edu/cnxml",
+    "cnxorg": "http://cnx.rice.edu/system-info",
     "col": "http://cnx.rice.edu/collxml",
     "data": "http://www.w3.org/TR/html5/dom.html#custom-data-attribute",
     "datadev": "http://dev.w3.org/html5/spec/#custom",

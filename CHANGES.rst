@@ -8,6 +8,7 @@
 ?.?.?
 -----
 
+- Add the missing 'cnxorg' namespace to the collection namespaces.
 - Unpin the java jre install within the docker file.
 
 1.3.0
