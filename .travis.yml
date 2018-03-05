@@ -4,6 +4,7 @@ services:
 language: python
 
 before_install:
+  - sudo apt-get install python3.4-venv
   # Create the virtual env and lint the codebase
   - make lint VENV_EXTRA_ARGS="--system-site-packages"
   # Install the codecov reporting utility
