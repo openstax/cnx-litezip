@@ -5,6 +5,11 @@
 
    - feature message
 
+?.?.?
+-----
+
+- Unpin the java jre install within the docker file.
+
 1.3.0
 -----
 

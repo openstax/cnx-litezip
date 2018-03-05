@@ -69,15 +69,10 @@ RUN { \
 RUN ln -svT "/usr/lib/jvm/java-7-openjdk-$(dpkg --print-architecture)" /docker-java-home
 ENV JAVA_HOME /docker-java-home/jre
 
-ENV JAVA_VERSION 7u131
-ENV JAVA_DEBIAN_VERSION 7u131-2.6.9-2~deb8u1
-
 RUN set -ex; \
 	\
 	apt-get update; \
-	apt-get install -y \
-		openjdk-7-jre-headless="$JAVA_DEBIAN_VERSION" \
-	; \
+	apt-get install -y openjdk-7-jre-headless; \
 	rm -rf /var/lib/apt/lists/*; \
 	\
 # verify that "docker-java-home" returns what we expect
