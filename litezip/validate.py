@@ -38,7 +38,8 @@ def validate_litezip(struct):
     """
     msgs = []
 
-    def _fmt_err(err): return "{}:{} -- {}: {}".format(*err)
+    def _fmt_err(err):
+        return "{}:{} -- {}: {}".format(*err)
 
     for obj in struct:
         if not is_valid_identifier(obj.id):

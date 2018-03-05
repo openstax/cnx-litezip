@@ -7,7 +7,7 @@ console_logging_config = {
     'formatters': {
         'cli': {
             'format': '%(levelname)-5.5s: %(message)s',
-            },
+        },
     },
     'filters': {},
     'handlers': {

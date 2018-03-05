@@ -13,7 +13,8 @@ def test_convert_completezip(datadir, tmpdir):
     from litezip.completezip import convert_completezip
     data_struct = convert_completezip(data_path)
 
-    def _keyed(s): return sorted({t[0]: t[1:] for t in s}.keys())
+    def _keyed(s):
+        return sorted({t[0]: t[1:] for t in s}.keys())
 
     from litezip.main import parse_litezip
     expected = parse_litezip(datadir / 'litezip')

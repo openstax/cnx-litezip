@@ -18,7 +18,7 @@ install_requires = read_from_requirements_txt('requirements/main.txt')
 tests_require = read_from_requirements_txt('requirements/test.txt')
 extras_require = {
     'test': tests_require,
-    }
+}
 description = "Connexions LiteZip Library"
 with open('README.rst', 'r') as readme:
     long_description = readme.read()
@@ -46,4 +46,4 @@ setup(
     [pytest11]
     cnx-litezip = litezip.contrib.pytest
     """,
-    )
+)

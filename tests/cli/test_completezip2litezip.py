@@ -22,7 +22,8 @@ def assert_equal(data_path, expected_path):
     data_struct = parse_litezip(data_path)
     expected = parse_litezip(expected_path)
 
-    def _keyed(s): return sorted({t[0]: t[1:] for t in s}.keys())
+    def _keyed(s):
+        return sorted({t[0]: t[1:] for t in s}.keys())
 
     assert _keyed(data_struct) == _keyed(expected)
 
