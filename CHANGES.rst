@@ -5,7 +5,7 @@
 
    - feature message
 
-?.?.?
+1.3.1
 -----
 
 - Add the missing 'cnxorg' namespace to the collection namespaces.
