@@ -3,6 +3,8 @@ import re
 
 import cnxml
 
+from pathlib import Path
+
 from .logger import logger
 
 
@@ -21,14 +23,14 @@ def is_valid_identifier(id):
     return VALID_ID_REGEX.match(id) is not None
 
 
-def validate_content(obj):
-    """Runs the correct validator for the given `obj`ect."""
+def validate_content(*objs):
+    """Runs the correct validator for given `obj`ects. Assumes all same type"""
     from .main import Collection, Module
     validator = {
         Collection: cnxml.validate_collxml,
         Module: cnxml.validate_cnxml,
-    }[type(obj)]
-    return validator(obj.file)
+    }[type(objs[0])]
+    return validator(*[obj.file for obj in objs])
 
 
 def validate_litezip(struct):
@@ -39,16 +41,20 @@ def validate_litezip(struct):
     msgs = []
 
     def _fmt_err(err):
-        return "{}:{} -- {}: {}".format(*err)
+        return (Path(err.filename), "{}:{} -- {}: {}".format(*(err[1:])))
 
+    obj_by_type = {}
     for obj in struct:
         if not is_valid_identifier(obj.id):
             msg = (obj.file.parent,
                    "{} is not a valid identifier".format(obj.id),)
             logger.info("{}: {}".format(*msg))
             msgs.append(msg)
-        content_msgs = list([(obj.file, _fmt_err(err),)
-                             for err in validate_content(obj)])
+        obj_by_type.setdefault(type(obj), []).append(obj)
+
+    for obtype in obj_by_type:
+        content_msgs = list([_fmt_err(err) for err in
+                             validate_content(*obj_by_type[obtype])])
         for msg in content_msgs:
             logger.info("{}: {}".format(*msg))
         msgs.extend(content_msgs)
