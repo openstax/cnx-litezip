@@ -52,6 +52,7 @@ def test_validate_litezip(datadir):
             ' "example", "exercise", "figure", "list", "media", "note",'
             ' "para", "preformat", "q:problemset", "quote", "rule", "section"'
             ' or "table"'),
-        ]
+    ]
 
-    assert validation_msgs == expected
+    for line in expected:
+        assert line in validation_msgs
