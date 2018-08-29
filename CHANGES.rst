@@ -5,6 +5,11 @@
 
    - feature message
 
+1.4.0
+-----
+
+- validate multiple files simultaneously
+
 1.3.1
 -----
 
