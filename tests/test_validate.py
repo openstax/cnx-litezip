@@ -41,12 +41,18 @@ def test_validate_litezip(datadir):
     validation_msgs = validate_litezip(data_struct)
 
     expected = [
-        (Path(data_path / 'collection.xml'),
-         '114:13 -- error: element "para" from namespace '
-         '"http://cnx.rice.edu/cnxml" not allowed in this context'),
         (Path(data_path / 'mux'), 'mux is not a valid identifier'),
+        (Path(data_path / 'collection.xml'),
+            '114:13 -- error: element "cnx:para" not allowed here;'
+            ' expected element "content", "declarations", "extensions",'
+            ' "featured-links" or "parameters"'),
         (Path(data_path / 'mux/index.cnxml'),
-         '61:10 -- error: unknown element "foo" from namespace '
-         '"http://cnx.rice.edu/cnxml"'),
+            '61:10 -- error: element "foo" not allowed anywhere;'
+            ' expected element "code", "definition", "div", "equation",'
+            ' "example", "exercise", "figure", "list", "media", "note",'
+            ' "para", "preformat", "q:problemset", "quote", "rule", "section"'
+            ' or "table"'),
     ]
-    assert validation_msgs == expected
+
+    for line in expected:
+        assert line in validation_msgs
