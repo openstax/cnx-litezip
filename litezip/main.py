@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import magic
 from collections import namedtuple
 
 from lxml import etree
@@ -12,6 +13,7 @@ __all__ = (
     'parse_module',
     'Collection',
     'Module',
+    'Resource',
 )
 
 
@@ -20,6 +22,7 @@ COLLECTION_FILENAME = 'collection.xml'
 
 Collection = namedtuple('Collection', 'id, file, resources')
 Module = namedtuple('Module', 'id, file, resources')
+Resource = namedtuple('Resource', 'data, filename, media_type, sha1')
 
 
 COLLECTION_NSMAP = {
@@ -59,6 +62,19 @@ def _find_resources(directory, excludes=[]):
                    if True not in [e(r) for e in excludes]])
 
 
+def _resource_from_path(path, fast_parse):
+    magic_wand = magic.Magic(mime=True)
+    media_type = magic_wand.from_file(str(path))
+    sha1 = None if fast_parse else _hash_it(path)
+    return Resource(data, path.name, media_type, sha1)
+
+
+def _hash_it(f):
+    h = hashlib.sha1()
+    h.update(f.open('rb').read())
+    return h.hexdigest()
+
+
 def parse_module(path):
     """Parse the file structure to a data structure given the path to
     a module directory.
@@ -78,7 +94,7 @@ def parse_module(path):
     return Module(id, file, resources)
 
 
-def parse_collection(path):
+def parse_collection(path, fast_parse=True):
     """Parse a file structure to a data structure given the path to
     a collection directory.
 
@@ -92,12 +108,13 @@ def parse_collection(path):
         lambda filepath: filepath.name == COLLECTION_FILENAME,
         lambda filepath: filepath.is_dir(),
     ]
-    resources = tuple(_find_resources(path, excludes=excludes))
+    resources_paths = _find_resources(path, excludes=excludes)
+    resources = [_resource_from_path(res, True) for res in resources_paths]
 
     return Collection(id, file, resources)
 
 
-def parse_litezip(path):
+def parse_litezip(path, fast_parse=True):
     """Parse a litezip file structure to a data structure given the path
     to the litezip directory.
 
