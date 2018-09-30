@@ -40,7 +40,7 @@ COLLECTION_NSMAP = {
 }
 
 
-def _parse_collection_id(elm_tree):
+def _parse_document_id(elm_tree):
     """Given the parsed xml to an `ElementTree`,
     parse the id from the content.
 
@@ -64,11 +64,11 @@ def parse_module(path):
     a module directory.
 
     """
-    id = path.name
     file = path / MODULE_FILENAME
 
     if not file.exists():
         raise MissingFile(file)
+    id = _parse_document_id(etree.parse(file.open()))
 
     excludes = [
         lambda filepath: filepath.name == MODULE_FILENAME,
@@ -86,7 +86,7 @@ def parse_collection(path):
     file = path / COLLECTION_FILENAME
     if not file.exists():
         raise MissingFile(file)
-    id = _parse_collection_id(etree.parse(file.open()))
+    id = _parse_document_id(etree.parse(file.open()))
 
     excludes = [
         lambda filepath: filepath.name == COLLECTION_FILENAME,
