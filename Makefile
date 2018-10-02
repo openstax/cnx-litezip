@@ -97,7 +97,7 @@ help-test :
 	@echo "    (see also setup.cfg's pytest configuration)"
 
 test : $(STATEDIR)/docker-build
-	docker-compose run testing bin/test $(TEST_EXTRA_ARGS) $(TEST)
+	docker-compose run testing bin/test $(filter-out $@, $(MAKECMDGOALS)) $(TEST_EXTRA_ARGS) $(TEST)
 
 # /Test
 
@@ -145,3 +145,11 @@ build :
 	touch $(STATEDIR)/docker-build
 
 # /Build
+
+# ###
+#  Catch-all to avoid errors when passing args to make test
+# ###
+
+%:
+	@:
+# /Catch-all

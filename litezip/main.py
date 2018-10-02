@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
+import hashlib
 import magic
-from collections import namedtuple
 
+from collections import namedtuple
 from lxml import etree
 
 from .exceptions import MissingFile
@@ -62,11 +63,11 @@ def _find_resources(directory, excludes=[]):
                    if True not in [e(r) for e in excludes]])
 
 
-def _resource_from_path(path, fast_parse):
+def _resource_from_path(path):
     magic_wand = magic.Magic(mime=True)
     media_type = magic_wand.from_file(str(path))
-    sha1 = None if fast_parse else _hash_it(path)
-    return Resource(data, path.name, media_type, sha1)
+    sha1 = _hash_it(path)
+    return Resource(path, path.name, media_type, sha1)
 
 
 def _hash_it(f):
@@ -89,12 +90,13 @@ def parse_module(path):
     excludes = [
         lambda filepath: filepath.name == MODULE_FILENAME,
     ]
-    resources = tuple(_find_resources(path, excludes=excludes))
+    resources_paths = _find_resources(path, excludes=excludes)
+    resources = tuple(_resource_from_path(res) for res in resources_paths)
 
     return Module(id, file, resources)
 
 
-def parse_collection(path, fast_parse=True):
+def parse_collection(path):
     """Parse a file structure to a data structure given the path to
     a collection directory.
 
@@ -109,12 +111,12 @@ def parse_collection(path, fast_parse=True):
         lambda filepath: filepath.is_dir(),
     ]
     resources_paths = _find_resources(path, excludes=excludes)
-    resources = [_resource_from_path(res, True) for res in resources_paths]
+    resources = tuple(_resource_from_path(res) for res in resources_paths)
 
     return Collection(id, file, resources)
 
 
-def parse_litezip(path, fast_parse=True):
+def parse_litezip(path):
     """Parse a litezip file structure to a data structure given the path
     to the litezip directory.
 

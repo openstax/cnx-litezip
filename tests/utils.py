@@ -11,6 +11,6 @@ def convert_to_relative_paths(struct, base):
     new_struct = []
     for obj in struct:
         new_obj = type(obj)(obj.id, _rel(obj.file),
-                            tuple([_rel(y) for y in obj.resources]))
+                            tuple([_rel(y.data) for y in obj.resources]))
         new_struct.append(new_obj)
     return tuple(new_struct)
