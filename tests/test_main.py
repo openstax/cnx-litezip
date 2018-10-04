@@ -27,7 +27,8 @@ def test_Module_struct(datadir):
     assert data_struct.resources[0].data == data_path / 'Lab4 Fill Order.png'
     assert data_struct.resources[0].filename == 'Lab4 Fill Order.png'
     assert data_struct.resources[0].media_type == 'image/png'
-    assert data_struct.resources[0].sha1 == '9ca303acc22aa85314307be56c51baca81e4b178'
+    assert data_struct.resources[0].sha1 == \
+        '9ca303acc22aa85314307be56c51baca81e4b178'
 
 
 def test_Collection_struct(datadir):
