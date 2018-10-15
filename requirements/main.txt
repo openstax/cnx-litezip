@@ -1,3 +1,4 @@
 # The project's main runtime dependencies...
 cnxml
 lxml
+python-magic

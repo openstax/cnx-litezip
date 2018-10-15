@@ -8,7 +8,15 @@ def test_Module_struct(datadir):
     id = 'm40645'
     data_path = datadir / 'litezip' / id
     content = data_path / 'index.cnxml'
-    resources = (data_path / 'Lab4 Fill Order.png',)
+    res_filename = 'Lab4 Fill Order.png'
+    res_mime = 'image/png'
+    res_sha1 = '9ca303acc22aa85314307be56c51baca81e4b178'
+    from litezip.main import Resource
+    resources = (Resource(data_path / 'Lab4 Fill Order.png',
+                          res_filename,
+                          res_mime,
+                          res_sha1
+                          ),)
 
     from litezip.main import Module
     data_struct = Module(id, content, resources)
@@ -16,7 +24,11 @@ def test_Module_struct(datadir):
     assert len(data_struct) == 3
     assert data_struct.id == id
     assert data_struct.file == content
-    assert data_struct.resources == (data_path / 'Lab4 Fill Order.png',)
+    assert data_struct.resources[0].data == data_path / 'Lab4 Fill Order.png'
+    assert data_struct.resources[0].filename == 'Lab4 Fill Order.png'
+    assert data_struct.resources[0].media_type == 'image/png'
+    assert data_struct.resources[0].sha1 == \
+        '9ca303acc22aa85314307be56c51baca81e4b178'
 
 
 def test_Collection_struct(datadir):
@@ -43,7 +55,7 @@ def test_parse_module(datadir):
 
     assert data_struct[0] == module_id
     assert data_struct[1] == data_path / 'index.cnxml'
-    assert data_struct[2] == (data_path / 'Lab4 Fill Order.png',)
+    assert data_struct[2][0].data == data_path / 'Lab4 Fill Order.png'
 
 
 def test_parse_module_without_resources(datadir):
@@ -103,13 +115,17 @@ def test_parse_litezip(datadir):
     data_struct = parse_litezip(data_path)
 
     assert len(data_struct) == 8
-    from litezip.main import Collection, Module
+    from litezip.main import Collection, Module, Resource
     col = Collection('col11405', data_path / 'collection.xml', tuple())
     assert data_struct[0] == col
     mods = [
         Module('m37154', data_path / 'm37154' / 'index.cnxml', tuple()),
         Module('m40646', data_path / 'm40646' / 'index.cnxml',
-               tuple([data_path / 'm40646' / 'Photodiode.png'])),
+               tuple((Resource(data_path / 'm40646' / 'Photodiode.png',
+                               'Photodiode.png',
+                               'image/png',
+                               '919f6ee8c96dd3334b24697f2949230caa9154ac'),))
+               ),
     ]
     for mod in mods:
         assert mod in data_struct
