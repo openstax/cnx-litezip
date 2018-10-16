@@ -5,10 +5,15 @@
 
    - feature message
 
+1.5.0
+-----
+
+- Create Resource objects as well
+
 1.4.0
 -----
 
-- validate multiple files simultaneously
+- Validate multiple files simultaneously
 
 1.3.1
 -----
