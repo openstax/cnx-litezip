@@ -15,7 +15,7 @@ __all__ = (
 )
 
 
-VALID_ID_REGEX = re.compile("^(col\d{5,}\d*|m\d{4,}|m?NEW\d{,2})$")
+VALID_ID_REGEX = re.compile(r"^(col\d{5,}\d*|m\d{4,}|m?NEW\d{,2})$")
 
 
 def is_valid_identifier(id):
