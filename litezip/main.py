@@ -76,7 +76,7 @@ def _hash_it(f):
     return h.hexdigest()
 
 
-def parse_module(path):
+def parse_module(path, excludes=None):
     """Parse the file structure to a data structure given the path to
     a module directory.
 
@@ -87,16 +87,19 @@ def parse_module(path):
         raise MissingFile(file)
     id = _parse_document_id(etree.parse(file.open()))
 
-    excludes = [
+
+    excludes = excludes or []
+    excludes.extend([
         lambda filepath: filepath.name == MODULE_FILENAME,
-    ]
+    ])
+
     resources_paths = _find_resources(path, excludes=excludes)
     resources = tuple(_resource_from_path(res) for res in resources_paths)
 
     return Module(id, file, resources)
 
 
-def parse_collection(path):
+def parse_collection(path, excludes=None):
     """Parse a file structure to a data structure given the path to
     a collection directory.
 
@@ -106,10 +109,11 @@ def parse_collection(path):
         raise MissingFile(file)
     id = _parse_document_id(etree.parse(file.open()))
 
-    excludes = [
+    excludes = excludes or []
+    excludes.extend([
         lambda filepath: filepath.name == COLLECTION_FILENAME,
         lambda filepath: filepath.is_dir(),
-    ]
+    ])
     resources_paths = _find_resources(path, excludes=excludes)
     resources = tuple(_resource_from_path(res) for res in resources_paths)
 
