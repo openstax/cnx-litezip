@@ -87,7 +87,6 @@ def parse_module(path, excludes=None):
         raise MissingFile(file)
     id = _parse_document_id(etree.parse(file.open()))
 
-
     excludes = excludes or []
     excludes.extend([
         lambda filepath: filepath.name == MODULE_FILENAME,

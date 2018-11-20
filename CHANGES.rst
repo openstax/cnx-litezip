@@ -5,6 +5,11 @@
 
    - feature message
 
+1.5.1
+-----
+
+- Add the ability to exclude certain files from parsing (optional).
+
 1.5.0
 -----
 
