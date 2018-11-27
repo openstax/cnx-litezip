@@ -1,6 +1,21 @@
 # -*- coding: utf-8 -*-
 import hashlib
-import magic
+
+try:
+    from magic import Magic
+except ImportError:  # OSX does not use libmagic - need to wrap CLI
+
+    import subprocess
+
+    class Magic:
+        def __init__(self, mime=True):
+            pass
+
+        def from_file(self, filepath):
+            mime = subprocess.Popen(("/usr/bin/file", "--brief", "--mime-type",
+                                     filepath),
+                                    stdout=subprocess.PIPE).communicate()[0]
+            return mime.strip().decode()
 
 from collections import namedtuple
 from lxml import etree
@@ -64,7 +79,7 @@ def _find_resources(directory, excludes=[]):
 
 
 def _resource_from_path(path):
-    magic_wand = magic.Magic(mime=True)
+    magic_wand = Magic(mime=True)
     media_type = magic_wand.from_file(str(path))
     sha1 = _hash_it(path)
     return Resource(path, path.name, media_type, sha1)
